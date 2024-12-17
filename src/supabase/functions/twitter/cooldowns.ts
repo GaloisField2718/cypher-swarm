@@ -1,7 +1,7 @@
 import { supabase } from '../../../supabase/supabaseClient';
 import { Logger } from '../../../utils/logger';
 
-type TweetType = 'main' | 'quote' | 'retweet' | 'media';
+type TweetType = 'main' | 'quote' | 'retweet' | 'thread' | 'media';
 
 // Cooldown duration in minutes for each tweet type
 const COOLDOWN_DURATION = 60; // 1 hour cooldown for all tweet types
@@ -147,7 +147,7 @@ export async function isCooldownActive(tweetType: TweetType): Promise<{ isActive
       return { isActive: false, remainingTime: null };
     }
 
-    const lastTweetTime = parseTimestampToUTC(data.created_at || new Date().toISOString());
+    const lastTweetTime = data.created_at ? parseTimestampToUTC(data.created_at) : new Date();
     const currentTime = new Date();
     const timeSinceLastTweet = currentTime.getTime() - lastTweetTime.getTime();
     const cooldownPeriod = COOLDOWN_DURATION * 60 * 1000;
@@ -202,6 +202,40 @@ export async function isCooldownActive(tweetType: TweetType): Promise<{ isActive
     Logger.log(`Remaining Cooldown Time (minutes): ${remainingTime}`);
   }
 
+  // Pour les threads
+  if (tweetType === 'thread') {
+    Logger.log("\n🧵 Checking THREAD cooldown...");
+    const { data, error } = await supabase
+      .from('twitter_tweets')
+      .select('created_at, text')
+      .eq('tweet_type', 'thread')
+      .order('created_at', { ascending: false })
+      .limit(1)
+      .single();
+
+    if (error) {
+      Logger.log("Error fetching thread cooldown:", error.message);
+      return { isActive: false, remainingTime: null };
+    }
+
+    if (!data) {
+      Logger.log("No previous threads found");
+      return { isActive: false, remainingTime: null };
+    }
+
+    const lastTweetTime = parseTimestampToUTC(data.created_at!);
+    const currentTime = new Date();
+    const timeSinceLastTweet = currentTime.getTime() - lastTweetTime.getTime();
+    const cooldownPeriod = COOLDOWN_DURATION * 60 * 1000;
+
+    logCooldownCheck('thread', lastTweetTime, currentTime, timeSinceLastTweet, cooldownPeriod, data.text);
+
+    const isActive = timeSinceLastTweet < cooldownPeriod;
+    const remainingTime = isActive ? Math.ceil((cooldownPeriod - timeSinceLastTweet) / (60 * 1000)) : null;
+
+    return { isActive, remainingTime };
+  }
+
   return {
     isActive,
     remainingTime
@@ -213,16 +247,18 @@ export async function isCooldownActive(tweetType: TweetType): Promise<{ isActive
  * @returns A formatted string indicating the cooldown status of each tweet type.
  */
 export async function getCooldownStatus(): Promise<string> {
-  const [mainCooldown, quoteCooldown, retweetCooldown, mediaCooldown] = await Promise.all([
+  const [mainCooldown, quoteCooldown, retweetCooldown, mediaCooldown, threadCooldown] = await Promise.all([
     isCooldownActive('main'),
     isCooldownActive('quote'),
     isCooldownActive('retweet'),
     isCooldownActive('media'),
+    isCooldownActive('thread'),
   ]);
 
   return `Tweet Cooldown Status:
   Main Tweet: ${mainCooldown.isActive ? `CANNOT SEND A MAIN TWEET. COOLDOWN IS ACTIVE (${mainCooldown.remainingTime} minutes remaining)` : 'CAN SEND A MAIN TWEET. COOLDOWN IS INACTIVE'}
   Quote Tweet: ${quoteCooldown.isActive ? `CANNOT SEND A QUOTE TWEET. COOLDOWN IS ACTIVE (${quoteCooldown.remainingTime} minutes remaining)` : 'CAN SEND A QUOTE TWEET. COOLDOWN IS INACTIVE'}
   Retweet: ${retweetCooldown.isActive ? `CANNOT RETWEET. COOLDOWN IS ACTIVE (${retweetCooldown.remainingTime} minutes remaining)` : 'CAN RETWEET. COOLDOWN IS INACTIVE'}
-  Media Tweet: ${mediaCooldown.isActive ? `CANNOT SEND A MEDIA TWEET. COOLDOWN IS ACTIVE (${mediaCooldown.remainingTime} minutes remaining)` : 'CAN SEND A MEDIA TWEET. COOLDOWN IS INACTIVE'}`;
+  Media Tweet: ${mediaCooldown.isActive ? `CANNOT SEND A MEDIA TWEET. COOLDOWN IS ACTIVE (${mediaCooldown.remainingTime} minutes remaining)` : 'CAN SEND A MEDIA TWEET. COOLDOWN IS INACTIVE'}
+  Thread: ${threadCooldown.isActive ? `CANNOT CREATE A THREAD. COOLDOWN IS ACTIVE (${threadCooldown.remainingTime} minutes remaining)` : 'CAN CREATE A THREAD. COOLDOWN IS INACTIVE'}`;
 }

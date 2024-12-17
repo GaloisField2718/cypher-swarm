@@ -95,10 +95,10 @@ async function generateTweetReply(
   };
 
   // Initialize OpenAI client and reply agent
-  const openAIClient = new OpenAIClient("gpt-4o");
+  const openAIClient = new OpenAIClient("gpt-4o-mini");
   const anthropicClient = new AnthropicClient("claude-3-5-sonnet-20241022");
   const fireworksClient = new FireworkClient("accounts/fireworks/models/llama-v3p3-70b-instruct");
-  const replyAgent = new ReplyAgent(anthropicClient);
+  const replyAgent = new ReplyAgent(openAIClient);
 
   // Add images to the agent's context if available
   if (imageContents && imageContents.length > 0) {

@@ -1,10 +1,9 @@
-// src/ai/agents/terminalAgent/terminalAgentConfig.ts
-
 import { AgentConfig } from '../../types/agentSystem';
 import { generateSystemPrompt } from '../corePersonality';
 import { configLoader } from '../../../utils/config';
 
 export const extractorAgentConfig: AgentConfig = {
+  name: 'ExtractorAgent',
   systemPromptTemplate: `
 # PERSONALITY
 {{corePersonalityPrompt}}

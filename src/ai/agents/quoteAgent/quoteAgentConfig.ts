@@ -8,6 +8,7 @@ import { configLoader } from '../../../utils/config';
 
 // Configuration for chat agent following terminal agent pattern
 export const quoteAgentConfig: AgentConfig = {
+  name: 'QuoteAgent',
   systemPromptTemplate: `
 # PERSONALITY
 {{corePersonalityPrompt}}

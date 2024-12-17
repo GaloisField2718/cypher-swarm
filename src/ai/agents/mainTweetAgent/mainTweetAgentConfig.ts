@@ -9,6 +9,7 @@ import { configLoader } from '../../../utils/config';
 
 // Configuration for chat agent following terminal agent pattern
 export const mainTweetAgentConfig: AgentConfig = {
+  name: 'MainTweetAgent',
   systemPromptTemplate: `
 # PERSONALITY
 {{corePersonalityPrompt}}

@@ -6,6 +6,7 @@ import { activeSummaries } from '../../../utils/dynamicVariables';
 import { configLoader } from '../../../utils/config';
 
 export const summaryAgentConfig: AgentConfig = {
+  name: 'SummaryAgent',
   systemPromptTemplate: `
 # PERSONALITY
 {{corePersonalityPrompt}}

@@ -27,6 +27,7 @@
     "path": "^0.12.7",
     "shell-quote": "^1.8.1",
     "uuid": "^11.0.3",
+    "vitest": "^2.1.8",
     "zod": "^3.23.8"
   },
   "devDependencies": {

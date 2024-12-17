@@ -37,7 +37,7 @@ export const TerminalTool: Tool = {
       properties: {
         internal_thought: {
           type: 'string',
-          description: "Satoshi's internal reasoning process about what terminal commands to run next and why.",
+          description: "Your internal reasoning process about what terminal commands to run next and why.",
         },
         plan: {
           type: 'string',

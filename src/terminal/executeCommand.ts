@@ -101,61 +101,70 @@ export async function executeMultipleCommands(
  * @param commandLine - The command line input as a string.
  * @returns The command execution result.
  */
-export async function executeCommand(
-  commandLine: string
-): Promise<{
-  command: string;
-  output: string;
-}> {
-  if (!commandLine) {
-    const output = 'Error: No command provided';
-    logTerminalOutput(commandLine, output);
-    return {
-      command: '',
-      output,
-    };
-  }
+export async function executeCommand(input: string) {
+  try {
+    // Parser si c'est un JSON
+    const parsedInput = input.startsWith('{') 
+      ? JSON.parse(input).command 
+      : input;
+    
+    const command = getCommand(parsedInput);
 
-  // Preprocess the command line before parsing
-  const processedCommand = preprocessCommandLine(commandLine.trim());
-  const tokens = parse(processedCommand);
-  
-  // Unescape the tokens after parsing
-  const unescapedTokens = tokens.map(token => 
-    typeof token === 'string' ? token.replace(/\\\$/g, '$') : token
-  );
-
-  const [commandName, ...argsTokens] = unescapedTokens;
-
-  const command = getCommand(commandName);
-
-  if (command) {
-    try {
-      let args: { [key: string]: any } = {};
-
-      if (command.parameters && command.parameters.length > 0) {
-        args = parseArguments(argsTokens as string[], command.parameters);
-      }
-
-      const result = await command.handler(args);
-      logTerminalOutput(commandLine, result.output);
+    if (!parsedInput) {
+      const output = 'Error: No command provided';
+      logTerminalOutput(parsedInput, output);
       return {
-        command: commandLine,
-        output: result.output,
-      };
-    } catch (error) {
-      const output = `Error executing command '${commandName}': ${error.message || error}`;
-      logTerminalOutput(commandLine, output);
-      return {
-        command: commandLine,
+        command: '',
         output,
       };
     }
-  } else {
-    const output = `Unknown command: ${commandName}`;
-    logTerminalOutput(commandLine, output);
+
+    // Preprocess the command line before parsing
+    const processedCommand = preprocessCommandLine(parsedInput.trim());
+    const tokens = parse(processedCommand);
+    
+    // Unescape the tokens after parsing
+    const unescapedTokens = tokens.map(token => 
+      typeof token === 'string' ? token.replace(/\\\$/g, '$') : token
+    );
+
+    const [commandName, ...argsTokens] = unescapedTokens;
+
+    if (command) {
+      try {
+        let args: { [key: string]: any } = {};
+
+        if (command.parameters && command.parameters.length > 0) {
+          args = parseArguments(argsTokens as string[], command.parameters);
+        }
+
+        const result = await command.handler(args);
+        logTerminalOutput(parsedInput, result.output);
+        return {
+          command: parsedInput,
+          output: result.output,
+        };
+      } catch (error) {
+        const output = `Error executing command '${commandName}': ${error.message || error}`;
+        logTerminalOutput(parsedInput, output);
+        return {
+          command: parsedInput,
+          output,
+        };
+      }
+    } else {
+      const output = `Unknown command: ${commandName}`;
+      logTerminalOutput(parsedInput, output);
+      return {
+        command: parsedInput,
+        output,
+      };
+    }
+  } catch (error) {
+    const output = `Error parsing command: ${error.message || error}`;
+    logTerminalOutput(input, output);
     return {
-      command: commandLine,
+      command: '',
       output,
     };
   }

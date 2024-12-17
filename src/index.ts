@@ -39,7 +39,7 @@ export async function startAISystem() {
     const sessionId = uuidv4();
     await ensureAuthenticated();
     
-    const modelClient = new AnthropicClient("claude-3-5-haiku-20241022", { temperature: 1 });
+    const modelClient = new OpenAIClient("gpt-4o-mini");
     // const modelClient = new OpenAIClient("gpt-4o");
 
     // Set initial active status
@@ -68,7 +68,7 @@ export async function startAISystem() {
           }
 
           // Run the agent
-          const functionResult = await terminalAgent.run(`REMEMBER YOUR PRIORITIES! ${await getCooldownStatus()}`);
+          const functionResult = await terminalAgent.run(`REMEMBER YOUR PRIORITIES! CREATE A THREAD.`);
 
           if (!functionResult.success) {
             throw new Error(functionResult.error);

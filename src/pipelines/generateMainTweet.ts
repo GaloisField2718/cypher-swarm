@@ -32,10 +32,10 @@ export async function generateAndPostMainTweet(
   Logger.enable();
   try {
     // Initialize AI clients and agents
-    const openAIClient = new OpenAIClient("gpt-4o");
+    const openAIClient = new OpenAIClient("gpt-4o-mini");
     const anthropicClient = new AnthropicClient("claude-3-5-sonnet-20241022");
     const fireworksClient = new FireworkClient("accounts/fireworks/models/llama-v3p3-70b-instruct");
-    const mainTweetAgent = new MainTweetAgent(anthropicClient);
+    const mainTweetAgent = new MainTweetAgent(openAIClient);
 
     // Load memories and terminal history
     const formattedHistory = await getFormattedRecentHistory();

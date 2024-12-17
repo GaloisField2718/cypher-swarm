@@ -5,6 +5,7 @@ import { AgentConfig } from '../../types/agentSystem';
 
 // Configuration for chat agent following terminal agent pattern
 const chatAgentConfig: AgentConfig = {
+  name: 'ChatAgent',
   systemPromptTemplate: `
 # PERSONALITY
 {{corePersonalityPrompt}}
