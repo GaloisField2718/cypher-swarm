@@ -3,10 +3,10 @@ import { uploadAndLogMedia } from './mediaEntries';
 import { Logger } from '../../../utils/logger';
 import { formatTimestamp } from '../../../utils/formatTimestamps';
 
-interface TweetData {
+export interface TweetData {
   tweet_id?: string | null;
   text: string;
-  tweet_type: 'main' | 'reply' | 'quote' | 'retweet';
+  tweet_type: 'main' | 'reply' | 'quote' | 'retweet' | 'thread';
   has_media?: boolean;
   bot_username?: string;
   in_reply_to_tweet_id?: string;
@@ -69,7 +69,10 @@ export async function logTweet(
     // Insert tweet record into the database
     const { data: tweet, error } = await supabase
       .from('twitter_tweets')
-      .insert(insertData)
+      .upsert(insertData, {
+        onConflict: 'tweet_id',
+        ignoreDuplicates: true
+      })
       .select('tweet_id')
       .maybeSingle();
 

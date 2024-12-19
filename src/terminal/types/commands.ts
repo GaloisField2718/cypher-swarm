@@ -27,7 +27,7 @@ export interface CommandParameter {
     /**
      * The expected type of the parameter.
      */
-    type?: 'string' | 'number' | 'boolean' | 'array';
+    type?: 'string' | 'number' | 'boolean';
   }
   
   /**

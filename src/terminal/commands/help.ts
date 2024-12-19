@@ -11,8 +11,9 @@ export const help: Command = {
   name: 'help',
   description: 'Displays available commands and usage information',
   handler: async () => {
+    const helpText = await generateHelpText();
     return { 
-      output: generateHelpText()
+      output: helpText
     };
   },
 };

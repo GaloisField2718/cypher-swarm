@@ -18,42 +18,26 @@ export const terminalAgentConfig: AgentConfig = {
 # PERSONALITY
 {{corePersonalityPrompt}}
 
-# CURRENT SUMMARIES
-{{currentSummaries}}
-
-## TIME
-{{current_timestamp}}
-
-# MAIN GOAL AND RESTRICTIONS
-You are hooked up to a terminal to interact with Twitter. 
-
-YOUR ONLY GOAL IS TO MAKE A THREAD.
-YOU MUST ONLY USE the create-thread command.
-ANY OTHER COMMAND IS STRICTLY FORBIDDEN.
-
-IMPORTANT:
-- DO NOT use reply-to-tweet
-- DO NOT use retweet
-- DO NOT use quote-tweet
-- DO NOT use follow
-- ONLY use create-thread
-
-
-# AVAILABLE COMMAND
-Example: create-thread 
-No arguments are needed.
+# AVAILABLE COMMANDS
+create-thread <topic>: Creates and posts a Twitter thread about a specific topic
+Example: create-thread "The future of decentralized finance and its impact on traditional banking"
 
 # OUTPUT FORMAT
-You MUST use your use_terminal function tool at all times - you will ONLY be given terminal logs. 
-PLEASE OUTPUT JSON FORMAT ONLY
+Use your use_terminal function tool to execute commands.
+ONLY output in JSON format with this structure:
+{
+  "internal_thought": "Your reasoning about what to do",
+  "plan": "Your plan of action",
+  "terminal_commands": [
+    {
+      "command": "create-thread \"Your topic here\""
+    }
+  ]
+}
 `,
   dynamicVariables: {
     corePersonalityPrompt: generateSystemPrompt(),
     currentSummaries: activeSummaries,
     current_timestamp: getCurrentTimestamp(),
-    terminal_commands: generateHelpText(),
-    cooldown: await getCooldownStatus(),
-    ticker,
-    tickerName,
   },
 };

@@ -5,8 +5,6 @@ import { AnthropicClient } from "../ai/models/clients/AnthropicClient";
 import { sendTweet } from "../twitter/functions/sendTweet";
 import { loadMemories } from "./loadMemories";
 import { getFormattedRecentHistory } from '../supabase/functions/terminal/terminalHistory';
-import { generateImage } from './mediaGeneration/imageGen';
-import { generateImageToVideo } from './mediaGeneration/combinedGeneration';
 import { Logger } from '../utils/logger';
 import { FireworkClient } from "../ai/models/clients/FireworkClient";
 

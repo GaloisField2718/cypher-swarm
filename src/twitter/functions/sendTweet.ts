@@ -3,6 +3,11 @@ import { prepareMediaData } from '../utils/mediaUtils';
 import { logTweet } from '../../supabase/functions/twitter/tweetEntries';
 import { Logger } from '../../utils/logger';
 import { addMainTweet } from '../../memory/addMemories';
+import { TweetData } from '../../supabase/functions/twitter/tweetEntries';
+
+interface SendTweetOptions {
+  tweet_type?: TweetData['tweet_type'];
+}
 
 /**
  * Extracts tweet ID from response based on tweet type
@@ -29,11 +34,13 @@ function extractTweetId(responseData: any, isLongTweet: boolean): string | null 
  * Sends a main tweet with optional media and logs it to the database.
  * @param text - The text content of the tweet
  * @param mediaUrls - Optional array of media URLs
+ * @param options - Optional options for the tweet
  * @returns The ID of the sent tweet, or null if failed
  */
 export async function sendTweet(
   text: string,
-  mediaUrls?: string[]
+  mediaUrls?: string[],
+  options: SendTweetOptions = {}
 ): Promise<string | null> {
   try {
     // Prepare media data for Twitter API
@@ -55,10 +62,11 @@ export async function sendTweet(
       Logger.log(`${isLongTweet ? 'Long tweet' : 'Tweet'} sent successfully (ID: ${tweetId})`);
 
       // Log the tweet to the database with prepared media data
+      const defaultType: TweetData['tweet_type'] = 'main';
       const logResult = await logTweet({
         tweet_id: tweetId,
         text: text,
-        tweet_type: 'main',
+        tweet_type: options.tweet_type || defaultType,
         has_media: !!mediaData,
         created_at: new Date().toISOString()
       }, mediaData);

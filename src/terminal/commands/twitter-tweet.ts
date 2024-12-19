@@ -7,7 +7,7 @@ import { isCooldownActive } from '../../supabase/functions/twitter/cooldowns';
  */
 export const twitterTweet: Command = {
   name: 'post-main-tweet',
-  description: 'Generates and posts a new main tweet. Requires a topic parameter in quotes (e.g., "Tweet a long $CYPHER bull post")',
+  description: 'Generates and posts a new main tweet. Requires a topic parameter in quotes (e.g., "Tweet a long $SWAN bull post")',
   parameters: [
     {
       name: 'topic',
