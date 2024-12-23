@@ -68,8 +68,7 @@ export async function startAISystem() {
           }
 
           // Run the agent
-          const functionResult = await terminalAgent.run(`REMEMBER YOUR PRIORITIES! CREATE A THREAD.`);
-
+          const functionResult = await terminalAgent.run(`REMEMBER YOUR PRIORITIES! ${await getCooldownStatus()}`);
           if (!functionResult.success) {
             throw new Error(functionResult.error);
           }

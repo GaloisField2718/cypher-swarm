@@ -1,70 +1,39 @@
 import { MemoryClient } from 'mem0ai';
+import { Logger } from '../utils/logger';
 
 // Throw error early if API key is missing
 const apiKey = process.env.MEM0_API_KEY;
 if (!apiKey) throw new Error('MEM0_API_KEY environment variable is required');
 
-export const client = new MemoryClient({
+// Check for project name in environment variables
+const projectId = process.env.MEM0_PROJECT_ID;
+const organizationId = process.env.MEM0_ORGANIZATION_ID;
+
+console.log('MEM0_PROJECT_ID from env:', projectId); // Debug log
+console.log('MEM0_ORGANIZATION_ID from env:', organizationId); // Debug log
+// Configure client with optional project name
+const clientConfig: { apiKey: string;organizationId?: string; projectId?: string  } = {
     apiKey: apiKey,
-});
+};
 
-// const msgTemplate = [{ role: "user", content: "CONTENT HERE" }, { role: "user", content: "CONTENT 2 HERE" }];
-// const utcTimestamp = new Date().toISOString();
+if (projectId?.trim()) {
+    clientConfig.projectId = projectId.trim();
+    console.log(`Initializing mem0 client with project: ${projectId}`);
+    console.log('Client config:', clientConfig); // Debug log
+} else {
+    console.log('Initializing mem0 client with default project');
+}
 
-// // for mem0, we use "user_id" to categorize the type of knowledge we are adding.
+if (organizationId?.trim()) {
+    clientConfig.organizationId = organizationId.trim();
+    console.log(`Initializing mem0 client with organization: ${organizationId}`);
+    console.log('Client config:', clientConfig); // Debug log
+} else {
+    console.log('Initializing mem0 client with default organization');
+}
 
-// // THIS IS HOW WE ADD WORLD KNOWLEDGE TO SATOSHI'S MEMORY
-// client.add(msgTemplate, { 
-//     agent_id: "satoshi", 
-//     user_id: "world_knowledge", 
-//     metadata: { timestamp: utcTimestamp } 
-// })
-//     .then(response => console.log(response))
-//     .catch(error => console.error(error));
+// Export the configured client
+export const client = new MemoryClient(clientConfig);
 
-// // THIS IS HOW WE ADD CRYPTO KNOWLEDGE TO SATOSHI'S MEMORY
-// client.add(msgTemplate, { 
-//     agent_id: "satoshi", 
-//     user_id: "crypto_ecosystem_knowledge", 
-//     metadata: { timestamp: utcTimestamp } 
-// })
-//     .then(response => console.log(response))
-//     .catch(error => console.error(error));
-
-// // THIS IS HOW WE ADD SELF KNOWLEDGE TO SATOSHI'S MEMORY
-// client.add(msgTemplate, { 
-//     agent_id: "satoshi", 
-//     user_id: "satoshi_self", 
-//     metadata: { timestamp: utcTimestamp } 
-// })
-//     .then(response => console.log(response))
-//     .catch(error => console.error(error));
-
-// /* User-specific knowledge storage strategy:
-//  * - Stores memories about individual users while maintaining searchability
-//  * - User ID from SUPABASE DB is stored in metadata for flexible querying:
-//  *   1. Filter by specific user when needed
-//  *   2. Search across all user interactions when no filter
-//  */
-
-// client.add(msgTemplate, { 
-//     agent_id: "satoshi", 
-//     user_id: "user_specific", 
-//     metadata: { user_id: "user_id_from_supabase_db", timestamp: utcTimestamp } 
-// })
-//     .then(response => console.log(response))
-//     .catch(error => console.error(error));
-
-// // NOW FOR STORING MAIN TWEETS SATOSHI SENDS OUT
-// client.add(msgTemplate, { 
-//     agent_id: "satoshi", 
-//     user_id: "main_tweets", 
-//     metadata: { timestamp: utcTimestamp } 
-// })
-
-// // NOW FOR STORING IMAGE PROMPTS SATOSHI GENERATES
-// client.add(msgTemplate, { 
-//     agent_id: "satoshi", 
-//     user_id: "image_prompts", 
-//     metadata: { timestamp: utcTimestamp } 
-// })
+// Verify client configuration
+console.log('Client config:', clientConfig); // Debug log
