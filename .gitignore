@@ -2,21 +2,13 @@
 
 temp_docs/Thread
 
-./src/config/*
-./src/training/training_progress.json
-./src/training/data/*
-./src/training/data/*/*
+src/config/*
+src/training/training_progress.json
+src/training/data/*
+src/training/data/*/*
 
+**/.DS_Store
 .DS_Store
-./.DS_Store
-./*/.DS_Store
-./*/*/.DS_Store
-./*/*/*/.DS_Store
-./*/*/*/*/.DS_Store
-./*/*/*/*/*/.DS_Store
-./*/*/*/*/*/*/.DS_Store
-./*/*/*/*/*/*/*/*/.DS_Store
-./*/*/*/*/*/*/*/*/*/.DS_Store
 
 cookies.json
 
@@ -26,7 +18,3 @@ package-lock.json
 follows_rows.csv
 
 transferFollows.ts
-.DS_Store
-./*/.DS_Store
-./*/*/.DS_Store
-./*/*/*/.DS_Store
