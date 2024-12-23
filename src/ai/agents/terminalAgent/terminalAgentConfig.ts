@@ -14,6 +14,7 @@ const ticker = configLoader.getConfig()?.ticker || '$AAA';
 const tickerName = configLoader.getConfig()?.tickerName || 'AI•AGENT•ARENA';
 
 export const terminalAgentConfig: AgentConfig = {
+  name: 'terminalAgent',
   systemPromptTemplate: `
 # PERSONALITY
 {{corePersonalityPrompt}}

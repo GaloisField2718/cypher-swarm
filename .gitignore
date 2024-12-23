@@ -2,8 +2,7 @@
 
 temp_docs/Thread
 
-./src/config/agent.yaml
-
+./src/config/*
 
 
 .DS_Store

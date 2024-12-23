@@ -1,6 +1,6 @@
 # Mission Configuration Template
 missions:
-  - id: "primary_growth"
+  - id: "engagement_with_wizardAgent"
     description: "Develop and engage the community through strategic content and interactions"
     priority: 1
     status: "active"
