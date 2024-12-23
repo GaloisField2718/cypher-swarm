@@ -28,11 +28,18 @@ export abstract class BaseAgent<T extends z.ZodTypeAny | null = null> {
     this.outputSchema = outputSchema;
     this.modelType = modelClient.modelType;
 
+
     // Enhanced config logging
-    Logger.log('\n🔍 Initializing BaseAgent:');
+    Logger.log(`\n🔍 Initializing ${this.config.name}:`);
     Logger.log('📋 Full Config:', {
       systemPromptTemplate: config.systemPromptTemplate?.slice(0, 100) + '...',
-      dynamicVariables: config.dynamicVariables,
+      dynamicVariables: {
+        ...config.dynamicVariables,
+        corePersonalityPrompt: config.dynamicVariables?.corePersonalityPrompt?.slice(0, 50) + '...',
+        currentSummaries: config.dynamicVariables?.currentSummaries === undefined 
+          ? 'Not provided'
+          : config.dynamicVariables.currentSummaries.slice(0, 50) + '...'
+      }
     });
 
     // Initialize modelAdapter based on modelType
@@ -247,13 +254,20 @@ export abstract class BaseAgent<T extends z.ZodTypeAny | null = null> {
         const formattedArgs = await this.handleFunctionCall(functionCall.functionArgs);
         for (const [key, value] of Object.entries(formattedArgs)) {
           const formattedKey = key.toUpperCase().replace(/_/g, '_');
-          // Handle arrays and objects specially
-          const formattedValue = Array.isArray(value) 
-            ? `[\n  ${value}\n]`
-            : typeof value === 'object' 
-              ? JSON.stringify(value, null, 2)
-              : typeof value === 'string' ? `"${value}"` : value;
-          formattedResponse += `${formattedKey}: ${formattedValue}\n`;
+          // Special formatting for the create-thread command
+          if (functionCall.functionName === 'create-thread' && key === 'tweet_contents') {
+            // Ensure tweets are in an array JSON format
+            const tweets = Array.isArray(value) ? value : [value];
+            formattedResponse += `${formattedKey}: ${JSON.stringify(tweets)}\n`;
+          } else {
+            // Keep existing formatting for other cases
+            const formattedValue = Array.isArray(value) 
+              ? `[\n  ${value}\n]`
+              : typeof value === 'object' 
+                ? JSON.stringify(value, null, 2)
+                : typeof value === 'string' ? `"${value}"` : value;
+            formattedResponse += `${formattedKey}: ${formattedValue}\n`;
+          }
         }
       }
 

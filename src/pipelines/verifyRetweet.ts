@@ -3,6 +3,7 @@ import { VerifyRetweetAgent } from '../ai/agents/verifyRetweetAgent/verifyRetwee
 import { Logger } from '../utils/logger';
 import { OpenAIClient } from '../ai/models/clients/OpenAiClient';
 import { retweet } from '../twitter/functions/retweet';
+import { OpenAIClient } from '../ai/models/clients/OpenAiClient';
 
 // Type for the reply result
 type ReplyResult = {

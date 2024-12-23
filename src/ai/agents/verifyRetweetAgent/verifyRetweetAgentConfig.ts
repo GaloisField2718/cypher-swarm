@@ -6,6 +6,7 @@ import { configLoader } from '../../../utils/config';
 
 // Configuration for chat agent following terminal agent pattern
 export const verifyRetweetAgentConfig: AgentConfig = {
+  name: 'VerifyRetweetAgent',
   systemPromptTemplate: `
 # PERSONALITY
 {{corePersonalityPrompt}}

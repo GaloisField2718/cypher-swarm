@@ -9,6 +9,7 @@ import { logTwitterInteraction } from '../../supabase/functions/twitter/interact
 import { hasAlreadyActioned } from '../../supabase/functions/twitter/tweetInteractionChecks';
 import { ReplyResult } from '../types/tweetResults';
 import { addReplyTweet } from '../../memory/addMemories';
+import { TweetData } from '../../supabase/functions/twitter/tweetEntries';
 
 /**
  * Extracts tweet ID from response based on tweet type
@@ -31,19 +32,23 @@ function extractTweetId(responseData: any, isLongTweet: boolean): string | null 
   }
 }
 
+interface ReplyTweetOptions {
+  tweet_type?: TweetData['tweet_type'];
+}
+
 /**
  * Replies to a specific tweet and logs the interaction
  * @param replyToTweetId - The ID of the tweet to reply to
  * @param text - The text content of the reply
  * @param mediaUrls - Optional array of media URLs
- * @param twitterInterface - Optional Twitter interface context
+ * @param options - Optional reply options
  * @returns The ID of the reply tweet, or null if failed
  */
 export async function replyToTweet(
   replyToTweetId: string,
   text: string,
   mediaUrls?: string[],
-  twitterInterface?: string
+  options: ReplyTweetOptions = {}
 ): Promise<ReplyResult> {
   try {
     // Check if the bot has already replied to the tweet
@@ -95,10 +100,11 @@ export async function replyToTweet(
     Logger.log(`${isLongTweet ? 'Long reply' : 'Reply'} sent successfully (ID: ${replyTweetId})`);
 
     // Log the bot's reply tweet
+    const defaultType: TweetData['tweet_type'] = 'reply';
     const tweetLogResult = await logTweet({
       tweet_id: replyTweetId,
       text: text,
-      tweet_type: 'reply',
+      tweet_type: options.tweet_type || defaultType,
       has_media: !!mediaData,
       in_reply_to_tweet_id: replyToTweetId,
       created_at: new Date().toISOString()
@@ -125,7 +131,6 @@ export async function replyToTweet(
     // Analyze tweet context
     const context = {
       ...(await analyzeTweetContext(targetTweet)),
-      twitterInterface: twitterInterface
     };
 
     // Log the interaction with enhanced context

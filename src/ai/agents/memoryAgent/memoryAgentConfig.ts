@@ -5,6 +5,7 @@ import { generateSystemPrompt } from '../corePersonality';
 import { configLoader } from '../../../utils/config';
 
 export const memoryAgentConfig: AgentConfig = {
+  name: 'MemoryAgent',
   systemPromptTemplate: `
 # PERSONALITY
 {{corePersonalityPrompt}}

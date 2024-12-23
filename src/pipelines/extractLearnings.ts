@@ -17,7 +17,7 @@ import { configLoader } from '../utils/config';
 Logger.enable();
 
 // initialize an openAI extractor agent
-const openAIClient = new OpenAIClient("gpt-4o");
+const openAIClient = new OpenAIClient("gpt-4o-mini");
 const extractorAgent = new ExtractorAgent(openAIClient);
 
 // Get agent name for dynamic field name

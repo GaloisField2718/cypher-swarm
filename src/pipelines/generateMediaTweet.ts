@@ -32,6 +32,7 @@ export async function generateAndPostMediaTweet(
   try {
     // Initialize AI clients and agents
     const openAIClient = new OpenAIClient("gpt-4o-mini");
+    const anthropicClient = new AnthropicClient("claude-3-5-sonnet-20241022");
     const fireworksClient = new FireworkClient("accounts/fireworks/models/llama-v3p3-70b-instruct");
     const mainTweetAgent = new MainTweetAgent(openAIClient);
     const mediaAgent = new MediaAgent(openAIClient);

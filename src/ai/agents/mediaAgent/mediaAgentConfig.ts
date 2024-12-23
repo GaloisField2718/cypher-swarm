@@ -7,6 +7,7 @@ import { recentMainTweets } from '../../../utils/dynamicVariables';
 import { configLoader } from '../../../utils/config';
 // Configuration for chat agent following terminal agent pattern
 export const mediaAgentConfig: AgentConfig = {
+  name: 'MediaAgent',
   systemPromptTemplate: `
 # PERSONALITY
 {{corePersonalityPrompt}}

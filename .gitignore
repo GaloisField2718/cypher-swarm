@@ -1,5 +1,11 @@
 .env
 
+temp_docs/Thread
+
+./src/config/agent.yaml
+
+
+
 .DS_Store
 ./.DS_Store
 ./*/.DS_Store

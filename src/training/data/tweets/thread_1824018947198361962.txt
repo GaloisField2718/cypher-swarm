@@ -1,0 +1,136 @@
+
+[1/26] Satoshi Nakamoto created OP_CAT in 2009 when creating Bitcoin.
+
+He then disabled it in 2010.  
+Now, Tapscript enables it again. 
+
+Only a small circle of people know about its capabilities yet…
+
+The potential is insane though… 👇 https://t.co/LnlaPmMG5u
+📷 Images:
+https://pbs.twimg.com/media/GVA3kHXWcAEM7Rp.jpg
+---
+
+[2/26] Here you can see Satoshis "misc changes" from Aug 25 2010: 
+https://t.co/F7NGQxmhIz
+---
+
+[3/26] What is OP_CAT?
+
+OP_CAT was once a part of Bitcoin’s scripting language but was disabled in 2010. Thanks to Tapscript, it’s making a comeback.
+---
+
+[4/26] @adam3us talked about it some time ago as well!
+---
+
+[5/26] In October 2023, a proposal came up to reintroduce OP_CAT as an opcode for tapscript by redefining the existing opcode OP_SUCCESS126. https://t.co/1b5Wpy6e6G
+📷 Images:
+https://pbs.twimg.com/media/GVA3k-lWAAAblYW.jpg
+---
+
+[6/26] Tapscript is the scripting language used for Taproot-enabled transactions. 
+
+Here you can find the proposal:
+https://t.co/2hnTvSmXlo
+---
+
+[7/26] What is OP_CAT?
+
+OP_CAT is set to innovate Bitcoin by bringing smart contract capabilities to Bitcoin, expanding its potential for Layer 2 applications.
+---
+
+[8/26] Imagine taking two pieces of data and instantly merging them into one - that’s exactly what OP_CAT does.
+---
+
+[9/26] Whether you’re working with strings, numbers, or other data, OP_CAT simplifies the process, making it easier to handle complex operations.
+---
+
+[10/26] But there’s a twist. 
+
+OP_CAT was disabled in Bitcoin’s early days because it could create scripts that consumed too much memory.
+---
+
+[11/26] Thanks to Tapscript, the issue is resolved. Tapscript limits stack elements to 520 bytes, making OP_CAT not only safe but a game-changer for Bitcoin.
+---
+
+[12/26] Picture this: a script with OP_CAT could turn a tiny 1-byte value into a monstrous 1-terabyte stack value! 
+
+To prevent this from happening, OP_CAT was shelved - until now.
+---
+
+[13/26] But why does it matter?
+ 
+OP_CAT is more than just a cool code; it’s set to redefine what’s possible on the Bitcoin network. 
+
+Here’s how:
+---
+
+[14/26] 1. Enhanced Script Capabilities
+
+With OP_CAT, developers can now build and manipulate larger integers directly within Bitcoin scripts.
+---
+
+[15/26] This opens up endless possibilities for applications that rely on complex number operations.
+---
+
+[16/26] 2. Zero-Knowledge Applications
+
+Zero-knowledge proofs (zkProofs) are the future of privacy and security in blockchain.
+---
+
+[17/26] OP_CAT makes it easier to create and verify these proofs by simplifying the process of building complex data structures.
+---
+
+[18/26] By enabling more complex scripts, OP_CAT paves the way for BitVM - a concept that could bring Ethereum-like smart contracts to Bitcoin
+---
+
+[19/26] 3. BitVM: Bringing Smart Contracts to Bitcoin
+
+Smart contracts have long been Ethereum’s playground, but OP_CAT could change that.
+---
+
+[20/26] 4. Decentralized Staking with
+
+OP_CAT could help build more robust and decentralized staking mechanisms by making it easier to construct and evaluate so called “slashing conditions”
+---
+
+[21/26] BUT: 
+
+As exciting as OP_CAT is, not everyone is on board. Major changes to Bitcoin require community consensus, and some people prefer a more minimalist approach.
+---
+
+[22/26] They argue that Bitcoin should prioritize other softforks that focus on core issues like scalability and privacy rather than adding new functionalities.
+---
+
+[23/26] Tbh I’ve never seen so much development happening on Bitcoin before.
+---
+
+[24/26] Despite the debate, the hype around OP_CAT is definitely there. 
+
+As Bitcoin continues to evolve with innovations like Ordinals and Runes, OP_CAT could play a crucial role in pushing its capabilities even further.
+---
+
+[25/26] There’s a telegram group as well for people who are bundling with OP_CAT
+
+https://t.co/7OSWCmX1mF
+---
+
+[26/26] Resources: 
+
+@fractal_bitcoin : 
+https://t.co/ofv4Ruz5Hi
+
+@Cointelegraph :
+https://t.co/AeNqeodXhn
+
+@hashrateindex: 
+https://t.co/aC5mD4sBDz
+
+Overview:
+
+https://t.co/stMmaBDmhl
+---
+
+@fractal_bitcoin @Cointelegraph @hashrateindex OP_CAT reminds me of the OP_RETURN field we know from Runes. 
+
+All of these things haven’t been used yet and the fact that it gets used now, makes me feel like a renaissance is happening.

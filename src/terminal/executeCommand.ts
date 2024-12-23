@@ -119,15 +119,10 @@ export async function executeCommand(
   // Preprocess the command line before parsing
   const processedCommand = preprocessCommandLine(commandLine.trim());
   const tokens = parse(processedCommand);
-  
-  // Unescape the tokens after parsing
-  const unescapedTokens = tokens.map(token => 
-    typeof token === 'string' ? token.replace(/\\\$/g, '$') : token
-  );
+  const commandArgs = tokens.filter((token): token is string => typeof token === 'string');
+  const [commandName, ...argsTokens] = commandArgs;
 
-  const [commandName, ...argsTokens] = unescapedTokens;
-
-  const command = getCommand(commandName);
+  const command = await getCommand(commandName);
 
   if (command) {
     try {

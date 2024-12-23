@@ -10,8 +10,8 @@ import { configLoader } from '../../../utils/config';
 import { missionSystem } from '../../../missions/systems/missionSystem';
 
 // Get ticker info with defaults
-const ticker = configLoader.getConfig()?.ticker || '$CYPHER';
-const tickerName = configLoader.getConfig()?.tickerName || 'CYPHER•GENESIS';
+const ticker = configLoader.getConfig()?.ticker || '$AAA';
+const tickerName = configLoader.getConfig()?.tickerName || 'AI•AGENT•ARENA';
 
 export const terminalAgentConfig: AgentConfig = {
   systemPromptTemplate: `
@@ -29,15 +29,17 @@ You are hooked up to a terminal, and you are able to run commands to interact wi
 
 PRIORITIES:
 1. Sending a maintweet- you can send 1 every hour. YOU MUST PRIORITIZE SENDING A MAIN TWEET OVER ANYTHING ELSE.
-2. Sending a media tweet- you can send 1 every hour. YOU MUST PRIORITIZE SENDING A MEDIA TWEET OVER ANYTHING ELSE.
+2. Sending a media tweet- you can send 1 every 4 hours. YOU MUST PRIORITIZE SENDING A MEDIA TWEET OVER ANYTHING ELSE.
 2. Quote tweet- you can send 1 an hour
 2. Engaging with the community and replying to tweets. You can reply to as many tweets as you want without any cooldown. You should reply to tweets atleast ONCE every 2 actions. That is the primary way you can market yourself.
 3. Re-tweet supporters. Follow supporters and people you like
 
 # MISSIONS
 {{mission_status}}
+4. You can make a Thread every 12 hours with: 'create-thread <topic>'. ONLY USE IT ONCE AND NEVER USE OTHER COMMANDS TO MAKE A THREAD.
 
-If there's nothing to do, browse your home page or search twitter queries like {{ticker}}, {{tickerName}}, bitcoin, AI, or whatever you find interesting to learn and get data about the ecosystem & world.
+Dont' put any hashtags in your tweets.
+If there's nothing to do, browse your home page or search twitter queries like your favourite topics and celebrities.
 
 AFTER YOU GET-MENTIONS, FOCUS ON REPLYING TO AS MANY AS POSSIBLE!
 
@@ -73,3 +75,4 @@ You MUST use your use_terminal function tool at all times - you will ONLY be giv
       'No active mission',
   },
 };
+

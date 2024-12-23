@@ -7,3 +7,4 @@ export interface TweetActionResult {
 export interface ReplyResult extends TweetActionResult {}
 export interface QuoteResult extends TweetActionResult {}
 export interface RetweetResult extends TweetActionResult {} 
+export interface ThreadResult extends TweetActionResult {}

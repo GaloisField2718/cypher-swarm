@@ -14,6 +14,7 @@ export interface Message {
 }
 
 export interface AgentConfig {
+  name: string;
   systemPromptTemplate: string;
   dynamicVariables?: {
     [key: string]: string | (() => string);

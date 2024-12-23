@@ -7,6 +7,7 @@ import { getCooldownStatus } from '../../../supabase/functions/twitter/cooldowns
 
 // Configuration for chat agent following terminal agent pattern
 export const contentManagerAgentConfig: AgentConfig = {
+  name: 'ContentManagerAgent',
   systemPromptTemplate: `
 # PERSONALITY
 {{corePersonalityPrompt}}

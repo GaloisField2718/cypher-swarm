@@ -9,6 +9,14 @@ export type MemoryResponse = Promise<any>; // Replace 'any' with actual response
 // Get the agent name from config
 const AGENT_NAME = configLoader.getAgentName().toLowerCase();
 
+type ExtendedMemoryOptions = {
+    agent_id: string;
+    user_id: string;
+    metadata?: Record<string, any>;
+    infer?: boolean;
+    project?: string;
+};
+
 /**
  * Base function to handle common memory addition logic and error handling
  * @param category Memory category (user_id in mem0)
@@ -25,18 +33,28 @@ async function addMemoryBase(
 ): MemoryResponse {
     try {
         const timestamp = new Date().toISOString();
+        const projectId = process.env.MEM0_PROJECT_ID?.trim();
         
-        const response = await client.add(msgTemplate, {
+        console.log('Debug - Memory Add Operation:');
+        console.log('Project ID:', projectId);
+        console.log('Category:', category);
+        
+        const memoryOptions: ExtendedMemoryOptions = {
             agent_id: AGENT_NAME,
             user_id: category,
             metadata: { ...(options.metadata || {}), timestamp },
-            infer: options.infer ?? true // Default to true if not specified
-        });
+            infer: options.infer ?? true,
+            project: projectId
+        };
         
-        Logger.log(`Memory added to category: ${category}`);
+        console.log('Memory Options:', memoryOptions);
+        
+        const response = await client.add(msgTemplate, memoryOptions);
+        
+        console.log('Memory Add Response:', response);
         return response;
     } catch (error) {
-        Logger.log(`Error adding memory to ${category}: ${error}`);
+        console.log('Error adding memory:', error);
         throw error;
     }
 }

@@ -4,8 +4,6 @@ import { OpenAIClient } from "../ai/models/clients/OpenAiClient";
 import { sendTweet } from "../twitter/functions/sendTweet";
 import { loadMemories } from "./loadMemories";
 import { getFormattedRecentHistory } from '../supabase/functions/terminal/terminalHistory';
-import { generateImage } from './mediaGeneration/imageGen';
-import { generateImageToVideo } from './mediaGeneration/combinedGeneration';
 import { Logger } from '../utils/logger';
 import { FireworkClient } from "../ai/models/clients/FireworkClient";
 
@@ -32,6 +30,8 @@ export async function generateAndPostMainTweet(
   try {
     // Initialize AI clients and agents
     const openAIClient = new OpenAIClient("gpt-4o-mini");
+    const anthropicClient = new AnthropicClient("claude-3-5-sonnet-20241022");
+    const fireworksClient = new FireworkClient("accounts/fireworks/models/llama-v3p3-70b-instruct");
     const mainTweetAgent = new MainTweetAgent(openAIClient);
 
     // Load memories and terminal history

@@ -6,6 +6,8 @@ import { Logger } from "../utils/logger";
 Logger.enable();
 
 const openAIClient = new OpenAIClient("gpt-4o-mini");
+const openAIClient = new OpenAIClient("gpt-4o-mini");
+const anthropicClient = new AnthropicClient("claude-3-5-haiku-20241022");
 const fireworksClient = new FireworkClient("accounts/fireworks/models/llama-v3p3-70b-instruct");
 const contentManagerAgent = new ContentManagerAgent(openAIClient);
 

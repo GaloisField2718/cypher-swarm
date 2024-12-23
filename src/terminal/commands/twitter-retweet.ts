@@ -7,7 +7,7 @@ import { confirmRetweet } from '../../pipelines/verifyRetweet';
  * @description Retweets a specified tweet
  */
 export const twitterRetweet: Command = {
-  name: 're-tweet',
+  name: 'retweet',
   description: 'Retweet a tweet. Only input the tweet ID number, raw digits. An agent will handle the rest.',
   parameters: [
     {
