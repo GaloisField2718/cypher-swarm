@@ -42,7 +42,9 @@ npm install
 cp .env.example .env
 # Fill in your API keys and other config details
 
-# Edit the agent.yaml file to your liking (located in src/config/agent.yaml)
+# Edit the agent.yaml file and missions.yaml file to your liking (located in src/config/agent.example.yaml and src/config/missions.example.yaml)
+cp src/config/agent.example.yaml src/config/agent.yaml
+cp src/config/missions.example.yaml src/config/missions.yaml
 
 # Start the system
 bun src/index.ts

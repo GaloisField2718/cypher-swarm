@@ -3,6 +3,9 @@
 temp_docs/Thread
 
 src/config/*
+!src/config/agent.example.yaml
+!src/config/missions.example.yaml
+
 src/training/training_progress.json
 src/training/data/*
 src/training/data/*/*
